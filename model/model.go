@@ -43,6 +43,9 @@ type SocialMedia struct {
 	GormModel
 	Name           string `json:"name" validate:"required"`
 	SocialMediaURL string `json:"social_media_url" validate:"required"`
+	Height         int    `json:"height" validate:"required"`
+	Weight         int    `json:"weight" validate:"required"`
+	Gender         string `json:"gender" validate:"required,oneof=MALE FEMALE"`
 	UserID         uint   `json:"user_id" gorm:"foreignKey:UserRefer"`
 	User           User   `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
@@ -55,6 +58,27 @@ type Comment struct {
 	PhotoID uint   `json:"photo_id" gorm:"foreignKey:PhotoRefer"`
 	Photo   Photo  `json:"photo" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	Message string `json:"message" validate:"required"`
+}
+
+// Nutrition database model
+type NutritionData struct {
+	GormModel
+	NameFood string  `json:"name_food"`
+	Energy   float64 `json:"energy"`
+	Protein  float64 `json:"protein"`
+	Fat      float64 `json:"fat"`
+	Carbo    float64 `json:"cerbo"`
+	Fiber    float64 `json:"fiber"`
+}
+
+// user nutrition database model
+type UserNutrition struct {
+	GormModel
+	UserID        uint        `json:"user_id"`
+	Food          string      `json:"food" validate:"required"`
+	FoodMass      int         `json:"food_mass" validate:"required"`
+	SocialMediaID uint        `json:"sosmed_id" gorm:"foreignKey:SocialMediaRefer"`
+	SocialMedia   SocialMedia `json:"social_media" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 // ValidateStruct validates the user struct according to the struct tags
@@ -84,6 +108,14 @@ func ValidateSosmed(sosmed SocialMedia) error {
 // ValidateStruct validates the comment struct according to the struct tags
 func ValidateComment(comment Comment) error {
 	if err := validate.Struct(comment); err != nil {
+		return err
+	}
+	return nil
+}
+
+// ValidateStruct validates the user nutrition struct according to the struct tags
+func ValidateUserNutrition(userNutrition UserNutrition) error {
+	if err := validate.Struct(userNutrition); err != nil {
 		return err
 	}
 	return nil

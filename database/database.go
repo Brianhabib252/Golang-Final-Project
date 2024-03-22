@@ -55,6 +55,16 @@ func AutoMigrate() {
 		fmt.Println("Failed to migrate tables comment:", err)
 		return
 	}
+	// Auto-migrate the Nutrition Data model
+	if err := db.AutoMigrate(&model.NutritionData{}); err != nil {
+		fmt.Println("Failed to migrate tables comment:", err)
+		return
+	}
+	// Auto-migrate the User Nutrition model
+	if err := db.AutoMigrate(&model.UserNutrition{}); err != nil {
+		fmt.Println("Failed to migrate tables comment:", err)
+		return
+	}
 	return
 }
 

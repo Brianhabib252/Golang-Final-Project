@@ -3,6 +3,7 @@ package repository
 import (
 	"golang-final-project/database"
 	"golang-final-project/model"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -13,11 +14,19 @@ func Create(data interface{}) error {
 	return db.Create(data).Error
 }
 
-// GetAll retrieves all records of a model from the database
-func GetAll(model interface{}) error {
+// Get data by seraching user id in the tabble from the database
+func GetByUserID(userID uint, model interface{}, records interface{}) error {
 	db := database.GetDB()
-	var records []interface{}
-	if err := db.Find(records).Error; err != nil {
+	if err := db.Find(records, "user_id = ?", userID).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+// GetByUserIDAndDate retrieves user nutritions based on user ID and date from the database
+func GetByUserIDAndDate(date time.Time, userID uint, model interface{}, records interface{}) error {
+	db := database.GetDB()
+	if err := db.Where("user_id = ? AND DATE(created_at) = ?", userID, date.Format("2006-01-02")).Find(records).Error; err != nil {
 		return err
 	}
 	return nil
@@ -63,6 +72,15 @@ func GetPreload(load string, model interface{}) error {
 func GetTwoPreloadByID(load1 string, load2 string, id uint, model interface{}) error {
 	db := database.GetDB()
 	if err := db.Preload(load1).Preload(load2).First(model, id).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+// Get Nutrition data retrieves a single record of a model by food name from the database
+func GetByfoodName(foodName string, model interface{}) error {
+	db := database.GetDB()
+	if err := db.First(&model, "name_food = ?", foodName).Error; err != nil {
 		return err
 	}
 	return nil

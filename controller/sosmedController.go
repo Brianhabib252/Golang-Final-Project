@@ -102,6 +102,8 @@ func UpdateSocialMedia(c *gin.Context) {
 	var request struct {
 		Name           string `json:"name"`
 		SocialMediaUrl string `json:"social_media_url"`
+		Height         int    `json:"height"`
+		Weight         int    `json:"weight"`
 	}
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -109,6 +111,8 @@ func UpdateSocialMedia(c *gin.Context) {
 	}
 	socialMedia.Name = request.Name
 	socialMedia.SocialMediaURL = request.SocialMediaUrl
+	socialMedia.Height = request.Height
+	socialMedia.Weight = request.Weight
 	// validate the update social media struct
 	if err := model.ValidateSosmed(socialMedia); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -153,6 +157,9 @@ func socialMediaResponse(socialMedia model.SocialMedia) gin.H {
 		"social_media_id":  socialMedia.ID,
 		"name":             socialMedia.Name,
 		"social_media_url": socialMedia.SocialMediaURL,
+		"height":           socialMedia.Height,
+		"weight":           socialMedia.Weight,
+		"gender":           socialMedia.Gender,
 		"user": gin.H{
 			"username": socialMedia.User.Username,
 			"email":    socialMedia.User.Email,
