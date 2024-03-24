@@ -25,7 +25,7 @@ this api have fitur to upload a foto, upload your biodata, make a comment for a 
 1. Clone the repository:
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/Brianhabib252/Golang-Final-Project.git
 ```
 
 2. Navigate to the project directory:
@@ -79,10 +79,10 @@ List all the endpoints available in your API along with their descriptions and e
     - Body:
       ```json
       {
-          	"age": int,
-          	"email": string,unique,email,
-          	"password": string,min 6 character,
-          	"username": string,unique
+          	"age": "int",
+          	"email": "string,unique,email",
+          	"password": "string,min 6 character",
+          	"username": "string,unique"
       }
       ```
   - Response:
@@ -90,7 +90,10 @@ List all the endpoints available in your API along with their descriptions and e
     - Body:
       ```json
       {
-          "key": "value"
+          	"age": "int",
+          	"email": "string",
+          	"id": "int",
+          	"username": "string"
       }
       ```
 
