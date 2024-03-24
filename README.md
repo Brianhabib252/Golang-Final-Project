@@ -71,9 +71,9 @@ the authorization using a jwt and id params that will use in every endpoint that
 
 List all the endpoints available in your API along with their descriptions and example requests/responses.
 
-- **Sign Up** endpoint for register a new user
+- **Sign Up**
   - Method: `Post`
-  - Path: `http://localhost:8080/signup`
+  - Path: `/signup`
   - Description: endpoint for register a new user
   - Request:
     - Body:
@@ -86,43 +86,164 @@ List all the endpoints available in your API along with their descriptions and e
       }
       ```
   - Response:
-    - Status: 200 OK
+    - Status: 201 Created
     - Body:
       ```json
       {
           	"age": "int",
           	"email": "string",
-          	"id": "int",
+          	"id": "uint",
           	"username": "string"
       }
       ```
-
-- **Endpoint 2**: Description of endpoint 2
-  - Method: `POST`
-  - Path: `/endpoint2`
-  - Description: Description of what this endpoint does
+- **Sign In**
+  - Method: `Post`
+  - Path: `/signin`
+  - Description: endpoint for sign in and get token by cookies
   - Request:
     - Body:
       ```json
       {
-          "key": "value"
+          	"email": "string,unique,email",
+          	"password": "string,min 6 character",
+      }
+      ```
+  - Response:
+    - Status: 200 OK
+    - Body:
+      ```json
+      {
+          	"token": "string",
+          	"id": "uint",
+      }
+      ```
+- **Create Social Media**
+  - Method: `POST`
+  - Path: `/sosmed`
+  - Description: post your social media and biodata to the database my sql
+  - Request:
+    - Body:
+      ```json
+      {
+          "name":"string",
+          "social_media_url":"string",
+          "height":"int"(cm),
+          "weight":"int"(kg),
+          "gender":"string"(MALE or FEMALE)
       }
       ```
   - Response:
     - Status: 201 Created
+    - Body:
+      ```json
+      {
+          "name":"string",
+          "social_media_id":"uint",
+          "social_media_url":"string",
+          "height":"int"(cm),
+          "weight":"int"(kg),
+          "gender":"string"(MALE or FEMALE)
+          "user": {
+              "email": "string",
+              "username": "string"
+          },
+      }
+      ```
+- **Get All Social Media**
+  - Method: `GET`
+  - Path: `/sosmed`
+  - Description: get all data of social media and biodata from the database my sql
+  - Request: none
+  - Response:
+    - Status: 200 OK
+    - Body:
+      ```json
+      {
+          "name":"string",
+          "social_media_id":"uint",
+          "social_media_url":"string",
+          "height":"int"(cm),
+          "weight":"int"(kg),
+          "gender":"string"(MALE or FEMALE)
+          "user": {
+              "email": "string",
+              "username": "string"
+          },
+      }
+      ```
+
+- **Get By ID Social Media**
+  - Method: `GET`
+  - Path: `/sosmed/:social_media_id`
+  - Description: get data of social media and biodata by social media id from the database my sql
+  - Request:
+    - params : social_media_id
+  - Response:
+    - Status: 201 Created
+    - Body:
+      ```json
+      {
+          "name":"string",
+          "social_media_id":"uint",
+          "social_media_url":"string",
+          "height":"int"(cm),
+          "weight":"int"(kg),
+          "gender":"string"(MALE or FEMALE)
+          "user": {
+              "email": "string",
+              "username": "string"
+          },
+      }
+      ```
+- **Update Social Media**
+  - Method: `PUT`
+  - Path: `/sosmed/id/social_media_id`
+  - Description: update your social media and biodata to the database my sql
+  - Request:
+    - params : id(dser id), social_media_id
+    - Body:
+      ```json
+      {
+          "name":"string",
+          "social_media_url":"string",
+          "height":"int"(cm),
+          "weight":"int"(kg),
+      }
+      ```
+  - Response:
+    - Status: 200 OK
+    - Body:
+      ```json
+      {
+          "name":"string",
+          "social_media_id":"uint",
+          "social_media_url":"string",
+          "height":"int"(cm),
+          "weight":"int"(kg),
+          "gender":"string"(MALE or FEMALE)
+          "user": {
+              "email": "string",
+              "username": "string"
+          },
+      }
+      ```
+- **Delete Social Media**
+  - Method: `POST`
+  - Path: `/sosmed/id/social_media_id`
+  - Description: delete your social media and biodata from the database my sql
+  - Request:
+    - params : id(dser id), social_media_id
+  - Response:
+    - Status: 200 OK
+    - Body:
+      ```json
+      {
+          "message": "Social media deleted successfully"
+      }
+      ```
+
 
 ## Examples
 
 Provide some examples or code snippets demonstrating how to use your API.
 
-## Contributing
-
-Explain how people can contribute to your project if you are open to contributions.
-
-## License
-
-Specify the license under which your project is distributed.
-
----
-
-Feel free to customize this template according to your specific API requirements and structure.
