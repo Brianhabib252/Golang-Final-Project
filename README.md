@@ -310,7 +310,7 @@ List all the endpoints available in your API along with their descriptions and e
   - Path: `/nutrition/id/nutrition_id`
   - Description: delete your food data from the database my sql
   - Request:
-    - params : id(dser id), nutrition_id
+    - params : id (user id), nutrition_id
   - Response:
     - Status: 200 OK
     - Body:
