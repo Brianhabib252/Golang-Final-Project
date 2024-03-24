@@ -9,8 +9,6 @@ this api have fitur to upload a foto, upload your biodata, make a comment for a 
   - [Authentication](#authentication)
   - [Endpoints](#endpoints)
 - [Examples](#examples)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Getting Started
 
@@ -127,9 +125,9 @@ List all the endpoints available in your API along with their descriptions and e
       {
           "name":"string",
           "social_media_url":"string",
-          "height":"int"(cm),
-          "weight":"int"(kg),
-          "gender":"string"(MALE or FEMALE)
+          "height":"int(cm)",
+          "weight":"int(kg)",
+          "gender":"string(MALE or FEMALE)"
       }
       ```
   - Response:
@@ -140,9 +138,9 @@ List all the endpoints available in your API along with their descriptions and e
           "name":"string",
           "social_media_id":"uint",
           "social_media_url":"string",
-          "height":"int"(cm),
-          "weight":"int"(kg),
-          "gender":"string"(MALE or FEMALE)
+          "height":"int(cm)",
+          "weight":"int(kg)",
+          "gender":"string(MALE or FEMALE)"
           "user": {
               "email": "string",
               "username": "string"
@@ -162,9 +160,9 @@ List all the endpoints available in your API along with their descriptions and e
           "name":"string",
           "social_media_id":"uint",
           "social_media_url":"string",
-          "height":"int"(cm),
-          "weight":"int"(kg),
-          "gender":"string"(MALE or FEMALE)
+          "height":"int(cm)",
+          "weight":"int(kg)",
+          "gender":"string(MALE or FEMALE)"
           "user": {
               "email": "string",
               "username": "string"
@@ -186,9 +184,9 @@ List all the endpoints available in your API along with their descriptions and e
           "name":"string",
           "social_media_id":"uint",
           "social_media_url":"string",
-          "height":"int"(cm),
-          "weight":"int"(kg),
-          "gender":"string"(MALE or FEMALE)
+          "height":"int(cm)",
+          "weight":"int(kg)",
+          "gender":"string(MALE or FEMALE)"
           "user": {
               "email": "string",
               "username": "string"
@@ -206,8 +204,8 @@ List all the endpoints available in your API along with their descriptions and e
       {
           "name":"string",
           "social_media_url":"string",
-          "height":"int"(cm),
-          "weight":"int"(kg),
+          "height":"int(cm)",
+          "weight":"int(kg)",
       }
       ```
   - Response:
@@ -218,9 +216,9 @@ List all the endpoints available in your API along with their descriptions and e
           "name":"string",
           "social_media_id":"uint",
           "social_media_url":"string",
-          "height":"int"(cm),
-          "weight":"int"(kg),
-          "gender":"string"(MALE or FEMALE)
+          "height":"int(cm)",
+          "weight":"int(kg)",
+          "gender":"string(MALE or FEMALE)"
           "user": {
               "email": "string",
               "username": "string"
@@ -228,7 +226,7 @@ List all the endpoints available in your API along with their descriptions and e
       }
       ```
 - **Delete Social Media**
-  - Method: `POST`
+  - Method: `DELETE`
   - Path: `/sosmed/id/social_media_id`
   - Description: delete your social media and biodata from the database my sql
   - Request:
@@ -241,9 +239,88 @@ List all the endpoints available in your API along with their descriptions and e
           "message": "Social media deleted successfully"
       }
       ```
-
+- **Create User Food**
+  - Method: `POST`
+  - Path: `/nutrition`
+  - Description: post your food and the mass of the food that you eat to the database my sql
+  - Request:
+    - Body:
+      ```json
+      {
+          "food":"string",
+          "food_mass":"int",
+          "sosmed_id":"uint"
+      }
+      ```
+  - Response:
+    - Status: 201 Created
+    - Body:
+      ```json
+      {
+          "date": "time",
+          "food": "string",
+          "food_mass": "int",
+          "nutrition_id": "uint",
+          "user_id": "uint"
+      }
+      ```
+- **Get User Food**
+  - Method: `GET`
+  - Path: `/nutrition`
+  - Description: get your food and the mass of the food that you eat from the database my sql
+  - Request: none
+  - Response:
+    - Status: 201 Created
+    - Body:
+      ```json
+      {
+          "date": "time",
+          "food": "string",
+          "food_mass": "int",
+          "nutrition_id": "uint",
+          "user_id": "uint"
+      }
+      ```
+- **Get User Daily Nutrition**
+  - Method: `GET`
+  - Path: `/nutrition/id/queri?date=YYYY-MM-DD`
+  - Description: get the nutrition of the food that you eat at certain date from the database my sql
+  - Request:
+    - params: id(user id)
+    - queri: date=YYYY-MM-DD
+  - Response:
+    - Status: 201 Created
+    - Body:
+      ```json
+      {
+          "carbo": "float64(gram)",
+          "carbo_need": "float64(gram)",
+          "energy": "float64(kal)",
+          "energy_need": "float64(kal)",
+          "fat": "float64(gram)",
+          "fat_need": "float64(gram)",
+          "fiber": "float64(gram)",
+          "fiber_need": "float64(gram)",
+          "protein": "float64(gram)",
+          "protein_need": "float64(gram)"
+      }
+      ```
+- **Delete Food**
+  - Method: `DELETE`
+  - Path: `/nutrition/id/nutrition_id`
+  - Description: delete your food data from the database my sql
+  - Request:
+    - params : id(dser id), nutrition_id
+  - Response:
+    - Status: 200 OK
+    - Body:
+      ```json
+      {
+          "message": "User food deleted successfully"
+      }
+      ```
 
 ## Examples
 
-Provide some examples or code snippets demonstrating how to use your API.
+Sadi, in this API, the user must first register to create an email and password, then the user must sign in to get authorization cookies which will later be needed to perform CRUD services on the API. After that, the user needs to create social media which contains social media links and biodata in the form of the user's height, weight and gender which will later be needed for the nutrition calculator application service. In the nutrition calculator application, the user can enter the food that the user has eaten into the database, then the user can retrieve the nutritional data that has been obtained and the user's nutritional needs based on the desired date. Apart from that, this application also has features for uploading photos and providing comments on photos and all API services have functions for creating, getting, updating and deleting data in the MySQL database.
 
