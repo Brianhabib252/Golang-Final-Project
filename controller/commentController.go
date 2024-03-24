@@ -23,7 +23,8 @@ func CreateComment(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to fetch user details"})
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to fetch comment details"})
 		return
 	}
 	comment.User = user
@@ -34,7 +35,7 @@ func CreateComment(c *gin.Context) {
 	}
 	// Fetch user details based on provided user ID
 	var photo model.Photo
-	if err := repository.GetPreloadByID("user", comment.PhotoID, &photo); err != nil {
+	if err := repository.GetPreloadByID("User", comment.PhotoID, &photo); err != nil {
 		if err == gorm.ErrRecordNotFound {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "photo not found"})
 			return
