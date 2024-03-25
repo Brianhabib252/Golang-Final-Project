@@ -594,14 +594,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/photo/1",
+							"raw": "http://localhost:8080/nutrition/25/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"photo",
+								"nutrition",
+								"25",
 								"1"
 							]
 						}
